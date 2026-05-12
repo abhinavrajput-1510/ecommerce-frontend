@@ -159,6 +159,147 @@ body {
   color: #111;
 }
 
+.hero-section {
+  padding: 80px 24px;
+  background: linear-gradient(135deg, #6b5bff 0%, #8e7bff 45%, #e6d7ff 100%);
+  color: #ffffff;
+}
+
+.hero-content {
+  max-width: 840px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 20px;
+  text-align: left;
+  animation: fadeInUp 0.8s ease both;
+}
+
+.hero-label {
+  display: inline-flex;
+  padding: 10px 16px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.14);
+  color: #f5f5ff;
+  font-size: 0.95rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.hero-section h1 {
+  margin: 0;
+  font-size: clamp(2.8rem, 5vw, 4.8rem);
+  line-height: 1.02;
+  max-width: 760px;
+}
+
+.hero-section p {
+  margin: 0;
+  max-width: 670px;
+  font-size: 1.05rem;
+  line-height: 1.8;
+  color: rgba(255, 255, 255, 0.92);
+}
+
+.hero-cta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px 28px;
+  border-radius: 999px;
+  background: #ffffff;
+  color: #5b3cff;
+  text-decoration: none;
+  font-size: 1rem;
+  font-weight: 700;
+  box-shadow: 0 18px 40px rgba(60, 40, 160, 0.16);
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.hero-cta:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 24px 48px rgba(60, 40, 160, 0.22);
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (max-width: 768px) {
+  .hero-section {
+    padding: 60px 18px;
+  }
+
+  .hero-content {
+    align-items: stretch;
+  }
+
+  .hero-section h1 {
+    font-size: clamp(2.4rem, 8vw, 3.2rem);
+  }
+
+  .hero-section p {
+    font-size: 1rem;
+  }
+
+  .hero-cta {
+    width: fit-content;
+    padding: 14px 22px;
+  }
+}
+
+@media (max-width: 520px) {
+  .hero-section {
+    padding: 50px 16px;
+  }
+
+  .hero-content {
+    gap: 16px;
+  }
+
+  .hero-section h1 {
+    font-size: 2.2rem;
+  }
+
+  .hero-cta {
+    width: 100%;
+    padding: 16px;
+  }
+}
+
+.products-section {
+  padding: 60px 24px;
+  background: #ffffff;
+}
+
+.products-content {
+  max-width: 900px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.products-content h2 {
+  font-size: 2.2rem;
+  margin-bottom: 12px;
+}
+
+.products-content p {
+  color: #555;
+  font-size: 1rem;
+  line-height: 1.8;
+}
+
 @media (max-width: 900px) {
   .header-top {
     align-items: center;
