@@ -7,7 +7,43 @@
     <link rel="stylesheet" href="styles/main.css" />
   </head>
   <body>
-    <header>
+    <header class="site-header">
+      <div class="header-top">
+        <div class="brand-logo">
+          <span class="logo-icon">🛍️</span>
+          <span class="logo-text">ShopEasy</span>
+        </div>
+
+        <nav class="main-nav">
+          <a href="#">Home</a>
+          <a href="#">Products</a>
+          <a href="#">About</a>
+          <a href="#">Contact</a>
+        </nav>
+
+        <div class="header-actions">
+          <div class="search-bar">
+            <input
+              type="search"
+              placeholder="Search products..."
+              aria-label="Search products"
+            />
+            <button type="button">Search</button>
+          </div>
+
+          <div class="cart-widget" aria-label="Shopping cart">
+            <span class="cart-icon">🛒</span>
+            <span class="cart-badge">3</span>
+          </div>
+
+          <button class="hamburger-menu" aria-label="Open mobile menu">
+            <span class="hamburger-line"></span>
+            <span class="hamburger-line"></span>
+            <span class="hamburger-line"></span>
+          </button>
+        </div>
+      </div>
+
       <h1>Welcome to Our Online Store</h1>
     </header>
     <script src="scripts/app.js"></script>
