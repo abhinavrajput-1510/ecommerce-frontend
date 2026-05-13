@@ -67,6 +67,23 @@
           season.
         </p>
       </div>
+
+      <!-- Loading State -->
+      <div id="loading" class="loading-container">
+        <div class="spinner"></div>
+        <p>Loading products...</p>
+      </div>
+
+      <!-- Error State -->
+      <div id="error" class="error-container" style="display: none">
+        <p id="error-message">
+          Failed to load products. Please try again later.
+        </p>
+        <button id="retry-btn" class="retry-btn">Retry</button>
+      </div>
+
+      <!-- Product Grid -->
+      <div id="product-grid" class="product-grid"></div>
     </section>
 
     <script src="scripts/app.js"></script>
