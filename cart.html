@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Shopping Cart | ShopEasy</title>
+    <link rel="stylesheet" href="styles/main.css" />
+  </head>
+  <body>
+    <header class="site-header">
+      <div
+        id="network-status"
+        class="network-status online"
+        title="Connection status"
+      >
+        <span class="status-indicator"></span>
+        <span class="status-text">Online</span>
+      </div>
+
+      <div class="header-top">
+        <div class="brand-logo">
+          <span class="logo-icon">🛍️</span>
+          <span class="logo-text">ShopEasy</span>
+        </div>
+
+        <nav class="main-nav">
+          <a href="index.html">Home</a>
+          <a href="index.html#products">Products</a>
+          <a href="product.html">Product Details</a>
+          <a href="checkout.html">Checkout</a>
+        </nav>
+
+        <div class="header-actions">
+          <div class="search-bar">
+            <input
+              type="search"
+              placeholder="Search products..."
+              aria-label="Search products"
+            />
+            <button type="button">Search</button>
+          </div>
+
+          <div class="cart-widget" aria-label="Shopping cart">
+            <span class="cart-icon">🛒</span>
+            <span class="cart-badge">0</span>
+          </div>
+
+          <button class="hamburger-menu" aria-label="Open mobile menu">
+            <span class="hamburger-line"></span>
+            <span class="hamburger-line"></span>
+            <span class="hamburger-line"></span>
+          </button>
+        </div>
+      </div>
+
+      <h1>Your Cart</h1>
+    </header>
+
+    <section class="cart-section">
+      <div class="cart-intro">
+        <div>
+          <h2>Review your selected items</h2>
+          <p>Update quantities, remove items, or continue shopping.</p>
+        </div>
+        <a class="button button-secondary" href="index.html"
+          >Continue Shopping</a
+        >
+      </div>
+
+      <div class="cart-layout">
+        <div id="cart-items" class="cart-items"></div>
+
+        <aside id="cart-summary" class="cart-summary">
+          <div class="summary-panel">
+            <h3>Order Summary</h3>
+            <div class="summary-row">
+              <span>Subtotal</span>
+              <strong id="cart-total">$0.00</strong>
+            </div>
+            <p class="summary-note">
+              Taxes and shipping calculated at checkout.
+            </p>
+            <button id="checkout-btn" class="button button-primary" disabled>
+              Proceed to Checkout
+            </button>
+          </div>
+        </aside>
+      </div>
+
+      <div id="cart-empty" class="cart-empty" style="display: none">
+        <p>Your cart is currently empty.</p>
+        <a class="button button-primary" href="index.html">Shop Now</a>
+      </div>
+    </section>
+
+    <script src="scripts/cart.js"></script>
+  </body>
+</html>

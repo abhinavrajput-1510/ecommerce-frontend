@@ -239,6 +239,9 @@ function renderProductDetail(product) {
           />
           <div id="detail-zoom-preview" class="zoom-preview"></div>
         </div>
+        ${
+          galleryImages.length > 1
+            ? `
         <div class="thumbnail-list">
           ${galleryImages
             .map(
@@ -250,6 +253,9 @@ function renderProductDetail(product) {
             )
             .join("")}
         </div>
+        `
+            : ""
+        }
       </div>
 
       <div class="product-detail-info">
