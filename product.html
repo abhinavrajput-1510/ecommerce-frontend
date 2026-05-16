@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Product Details | ShopEasy</title>
+    <link rel="stylesheet" href="styles/main.css" />
+  </head>
+  <body>
+    <header class="site-header">
+      <div
+        id="network-status"
+        class="network-status online"
+        title="Connection status"
+      >
+        <span class="status-indicator"></span>
+        <span class="status-text">Online</span>
+      </div>
+
+      <div class="header-top">
+        <div class="brand-logo">
+          <span class="logo-icon">🛍️</span>
+          <span class="logo-text">ShopEasy</span>
+        </div>
+
+        <nav class="main-nav">
+          <a href="index.html">Home</a>
+          <a href="index.html#products">Products</a>
+          <a href="#about">About</a>
+          <a href="#contact">Contact</a>
+        </nav>
+
+        <div class="header-actions">
+          <div class="search-bar">
+            <input
+              type="search"
+              placeholder="Search products..."
+              aria-label="Search products"
+            />
+            <button type="button">Search</button>
+          </div>
+
+          <div class="cart-widget" aria-label="Shopping cart">
+            <span class="cart-icon">🛒</span>
+            <span class="cart-badge">0</span>
+          </div>
+
+          <button class="hamburger-menu" aria-label="Open mobile menu">
+            <span class="hamburger-line"></span>
+            <span class="hamburger-line"></span>
+            <span class="hamburger-line"></span>
+          </button>
+        </div>
+      </div>
+
+      <h1>Product Details</h1>
+    </header>
+
+    <section class="product-detail-section">
+      <div class="product-detail-header">
+        <a class="back-link" href="index.html">← Back to products</a>
+      </div>
+
+      <div id="detail-loading" class="loading-container">
+        <div class="spinner"></div>
+        <p>Loading product details...</p>
+      </div>
+
+      <div id="detail-error" class="error-container" style="display: none">
+        <p id="detail-error-message">
+          Could not load this product. Please try again later.
+        </p>
+        <button id="detail-retry-btn" class="retry-btn">Retry</button>
+      </div>
+
+      <div
+        id="detail-success"
+        class="success-message"
+        style="display: none"
+      ></div>
+
+      <div
+        id="detail-content"
+        class="product-detail-content"
+        style="display: none"
+      ></div>
+    </section>
+
+    <script src="scripts/product.js"></script>
+  </body>
+</html>

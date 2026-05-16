@@ -152,6 +152,8 @@ async function fetchProducts() {
     if (cachedProducts) {
       productsData = cachedProducts;
       renderProducts(productsData);
+      loadingContainer.style.display = "none";
+      errorContainer.style.display = "none";
       isFetching = false;
       return;
     }
@@ -287,37 +289,39 @@ function createProductCard(product, index) {
   const safeCategory = escapeHtml(product.category);
 
   card.innerHTML = `
-    <div class="product-image-container">
-      <img
-        src="${product.image}"
-        alt="${safeTitle}"
-        class="product-image"
-        loading="lazy"
-        decoding="async"
-      />
-      ${discount > 0 ? `<div class="product-badge">-${discount}%</div>` : ""}
-    </div>
-    <div class="product-info">
-      <span class="product-category">${safeCategory}</span>
-      <h3 class="product-name">${safeTitle}</h3>
-      <p class="product-description">${safeDescription}</p>
-      <div class="product-rating">
-        <span class="stars" title="${rating}/5 stars">${stars}</span>
-        <span class="rating-count">${product.rating?.count || 0} reviews</span>
+    <a class="product-card-link" href="product.html?id=${product.id}" aria-label="View details for ${safeTitle}">
+      <div class="product-image-container">
+        <img
+          src="${product.image}"
+          alt="${safeTitle}"
+          class="product-image"
+          loading="lazy"
+          decoding="async"
+        />
+        ${discount > 0 ? `<div class="product-badge">-${discount}%</div>` : ""}
       </div>
-      <div class="product-footer">
-        <div class="product-price">
-          <span class="price-current">$${product.price.toFixed(2)}</span>
-          ${
-            originalPrice != product.price
-              ? `<span class="price-original">$${originalPrice}</span>`
-              : ""
-          }
+      <div class="product-info">
+        <span class="product-category">${safeCategory}</span>
+        <h3 class="product-name">${safeTitle}</h3>
+        <p class="product-description">${safeDescription}</p>
+        <div class="product-rating">
+          <span class="stars" title="${rating}/5 stars">${stars}</span>
+          <span class="rating-count">${product.rating?.count || 0} reviews</span>
         </div>
-        <button class="add-to-cart-btn" data-product-id="${product.id}" aria-label="Add ${safeTitle} to cart">
-          Add to Cart
-        </button>
       </div>
+    </a>
+    <div class="product-footer">
+      <div class="product-price">
+        <span class="price-current">$${product.price.toFixed(2)}</span>
+        ${
+          originalPrice != product.price
+            ? `<span class="price-original">$${originalPrice}</span>`
+            : ""
+        }
+      </div>
+      <button class="add-to-cart-btn" data-product-id="${product.id}" aria-label="Add ${safeTitle} to cart">
+        Add to Cart
+      </button>
     </div>
   `;
 
