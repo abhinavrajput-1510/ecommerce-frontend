@@ -6,6 +6,63 @@ body {
   color: #222;
 }
 
+/* Network Status Indicator */
+.network-status {
+  position: fixed;
+  top: 10px;
+  right: 10px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 12px;
+  border-radius: 20px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  z-index: 100;
+  opacity: 0.9;
+  transition: opacity 0.3s ease;
+}
+
+.network-status.online {
+  background: #e8f5e9;
+  color: #2e7d32;
+}
+
+.network-status.offline {
+  background: #ffebee;
+  color: #c62828;
+}
+
+.status-indicator {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.network-status.online .status-indicator {
+  background: #4caf50;
+  animation: pulse-online 2s infinite;
+}
+
+.network-status.offline .status-indicator {
+  background: #f44336;
+}
+
+@keyframes pulse-online {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.6;
+  }
+}
+
+.network-status:hover {
+  opacity: 1;
+}
+
 .site-header {
   position: relative;
   background: #ffffff;
@@ -389,6 +446,8 @@ body {
     transform 0.3s ease,
     box-shadow 0.3s ease;
   animation: fadeIn 0.5s ease both;
+  will-change: transform, box-shadow;
+  contain: layout style paint;
 }
 
 .product-card:hover {
@@ -405,6 +464,7 @@ body {
   align-items: center;
   justify-content: center;
   overflow: hidden;
+  contain: layout style paint;
 }
 
 .product-image {
@@ -413,6 +473,7 @@ body {
   object-fit: contain;
   padding: 16px;
   transition: transform 0.3s ease;
+  will-change: transform;
 }
 
 .product-card:hover .product-image {
@@ -455,7 +516,7 @@ body {
   margin-bottom: 8px;
   line-height: 1.4;
   display: -webkit-box;
-  /* -webkit-line-clamp: 2; */
+  -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
   overflow: hidden;
   min-height: 2.8em;
@@ -467,7 +528,7 @@ body {
   line-height: 1.5;
   margin-bottom: 12px;
   display: -webkit-box;
-  /* -webkit-line-clamp: 2; */
+  -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
   overflow: hidden;
   flex: 1;
