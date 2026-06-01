@@ -16,15 +16,20 @@ function parseEnv(content) {
       }
 
       const key = line.slice(0, separatorIndex).trim();
-      const value = line.slice(separatorIndex + 1).trim().replace(/^"|"$/g, "");
+      const value = line
+        .slice(separatorIndex + 1)
+        .trim()
+        .replace(/^"|"$/g, "");
       env[key] = value;
       return env;
     }, {});
 }
 
 if (!fs.existsSync(envPath)) {
-  console.error("Missing .env file. Copy .env.example to .env and add Firebase values.");
-  process.exit(1);
+  console.warn(
+    "No .env file found. Existing scripts/firebase-config.js will be used if present.",
+  );
+  process.exit(0);
 }
 
 const env = parseEnv(fs.readFileSync(envPath, "utf8"));
@@ -39,7 +44,9 @@ const requiredKeys = [
 
 const missingKeys = requiredKeys.filter((key) => !env[key]);
 if (missingKeys.length) {
-  console.error(`Missing required Firebase env values: ${missingKeys.join(", ")}`);
+  console.error(
+    `Missing required Firebase env values: ${missingKeys.join(", ")}`,
+  );
   process.exit(1);
 }
 
