@@ -2,9 +2,16 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
     <title>Login & Signup - EcommercePro</title>
-    <link rel="stylesheet" href="styles/main.css" />
+    <link
+      rel="icon"
+      href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%235a67f2'/%3E%3Cpath d='M18 20h6l4 22h20l4-14H29' fill='none' stroke='white' stroke-width='5' stroke-linecap='round' stroke-linejoin='round'/%3E%3Ccircle cx='31' cy='50' r='4' fill='white'/%3E%3Ccircle cx='46' cy='50' r='4' fill='white'/%3E%3C/svg%3E"
+    />
+    <link rel="preconnect" href="https://www.gstatic.com" crossorigin />
+    <link rel="preconnect" href="https://www.googleapis.com" crossorigin />
+    <link rel="preload" href="styles/main.min.css" as="style" />
+    <link rel="stylesheet" href="styles/main.min.css" />
   </head>
   <body>
     <header class="site-header">
@@ -13,16 +20,13 @@
           <span class="logo-icon">🛍️</span>
           <span class="logo-text">EcommercePro</span>
         </div>
-
-        <nav class="main-nav">
+        <nav id="primary-navigation" class="main-nav">
           <a href="index.html">Home</a>
           <a href="index.html#products">Products</a>
           <a href="cart.html">Cart</a>
-          <a href="auth.html" class="active">Account</a>
-          <a href="#">About</a>
+          <a href="auth.html" class="active">Account</a> <a href="#">About</a>
           <a href="#">Contact</a>
         </nav>
-
         <div class="header-actions">
           <div class="search-bar">
             <input
@@ -32,17 +36,18 @@
             />
             <button type="button">Search</button>
           </div>
-
           <a class="cart-widget" href="cart.html" aria-label="Shopping cart">
-            <span class="cart-icon">🛒</span>
-            <span class="cart-badge">0</span>
+            <span class="cart-icon">🛒</span> <span class="cart-badge">0</span>
           </a>
-
           <a id="user-status" class="user-status" href="auth.html"
             >Hello, Guest</a
           >
-
-          <button class="hamburger-menu" aria-label="Open mobile menu">
+          <button
+            class="hamburger-menu"
+            aria-label="Open mobile menu"
+            aria-controls="primary-navigation"
+            aria-expanded="false"
+          >
             <span class="hamburger-line"></span>
             <span class="hamburger-line"></span>
             <span class="hamburger-line"></span>
@@ -50,16 +55,12 @@
         </div>
       </div>
     </header>
-
-    <!-- Main Auth Container -->
     <main class="auth-main">
       <div class="auth-container">
-        <!-- Form Toggle Buttons -->
         <div class="form-toggle">
           <button class="toggle-btn active" id="login-toggle">Login</button>
           <button class="toggle-btn" id="signup-toggle">Sign Up</button>
         </div>
-
         <div id="auth-status-panel" class="auth-status-panel hidden">
           <p id="auth-status-message"></p>
           <button
@@ -70,12 +71,9 @@
             Logout
           </button>
         </div>
-
-        <!-- Login Form -->
         <form id="login-form" class="auth-form active">
           <h2>Welcome Back</h2>
           <p class="form-subtitle">Sign in to your account</p>
-
           <div class="form-group">
             <label for="login-email">Email Address</label>
             <input
@@ -87,7 +85,6 @@
             />
             <span class="error-message" id="login-email-error"></span>
           </div>
-
           <div class="form-group">
             <label for="login-password">Password</label>
             <div class="password-input-group">
@@ -109,11 +106,8 @@
             </div>
             <span class="error-message" id="login-password-error"></span>
           </div>
-
           <a href="#" class="forgot-password">Forgot Password?</a>
-
           <button type="submit" class="button button-primary">Login</button>
-
           <p class="form-switch">
             Don't have an account?
             <button type="button" class="link-button" id="switch-to-signup">
@@ -121,16 +115,12 @@
             </button>
           </p>
         </form>
-
-        <!-- Signup Form -->
         <form id="signup-form" class="auth-form">
           <h2>Create Account</h2>
           <p class="form-subtitle">Join us to get personalized features</p>
-
           <div class="form-group">
             <label for="signup-fullname">Full Name</label>
             <input
-              type="text"
               id="signup-fullname"
               name="fullname"
               placeholder="John Doe"
@@ -138,7 +128,6 @@
             />
             <span class="error-message" id="signup-fullname-error"></span>
           </div>
-
           <div class="form-group">
             <label for="signup-email">Email Address</label>
             <input
@@ -150,7 +139,6 @@
             />
             <span class="error-message" id="signup-email-error"></span>
           </div>
-
           <div class="form-group">
             <label for="signup-password">Password</label>
             <div class="password-input-group">
@@ -176,7 +164,6 @@
             </div>
             <span class="error-message" id="signup-password-error"></span>
           </div>
-
           <div class="form-group">
             <label for="signup-confirm-password">Confirm Password</label>
             <div class="password-input-group">
@@ -201,7 +188,6 @@
               id="signup-confirm-password-error"
             ></span>
           </div>
-
           <div class="password-requirements">
             <p>Password must contain:</p>
             <ul>
@@ -211,11 +197,9 @@
               <li id="req-number">At least one number (0-9)</li>
             </ul>
           </div>
-
           <button type="submit" class="button button-primary">
             Create Account
           </button>
-
           <p class="form-switch">
             Already have an account?
             <button type="button" class="link-button" id="switch-to-login">
@@ -225,15 +209,13 @@
         </form>
       </div>
     </main>
-
-    <!-- Footer -->
     <footer class="footer">
       <div class="container">
         <p>&copy; 2026 EcommercePro. All rights reserved.</p>
       </div>
     </footer>
-
-    <script type="module" src="scripts/auth.js"></script>
-    <script src="scripts/userStatus.js"></script>
+    <script src="scripts/firebase-config.js" defer="defer"></script>
+    <script type="module" src="scripts/auth.min.js"></script>
+    <script src="scripts/userStatus.min.js" defer="defer"></script>
   </body>
 </html>

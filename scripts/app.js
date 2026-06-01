@@ -27,11 +27,30 @@ const loadingContainer = document.getElementById("loading");
 const errorContainer = document.getElementById("error");
 const errorMessage = document.getElementById("error-message");
 const retryBtn = document.getElementById("retry-btn");
+const productSearchInput = document.getElementById("product-search");
+const productSearchBtn = document.getElementById("product-search-btn");
+const searchStatus = document.getElementById("search-status");
 
 // Store products in memory for cart functionality
 let productsData = [];
 let retryCount = 0;
 let isFetching = false; // Prevent multiple simultaneous requests
+
+function getOptimizedImageUrl(imageUrl, width) {
+  try {
+    const url = new URL(imageUrl);
+    const source = `${url.host}${url.pathname}${url.search}`;
+    return `https://wsrv.nl/?url=${encodeURIComponent(source)}&w=${width}&fit=contain&output=webp&q=82`;
+  } catch (error) {
+    return imageUrl;
+  }
+}
+
+function getOptimizedImageSrcset(imageUrl, widths) {
+  return widths
+    .map((width) => `${getOptimizedImageUrl(imageUrl, width)} ${width}w`)
+    .join(", ");
+}
 
 // ============================================
 // API Caching Strategy
@@ -151,7 +170,7 @@ async function fetchProducts() {
     const cachedProducts = getCachedProducts();
     if (cachedProducts) {
       productsData = cachedProducts;
-      renderProducts(productsData);
+      renderProductResults();
       loadingContainer.style.display = "none";
       errorContainer.style.display = "none";
       isFetching = false;
@@ -193,7 +212,7 @@ async function fetchProducts() {
     );
 
     // Render and hide loading state
-    renderProducts(productsData);
+    renderProductResults();
     loadingContainer.style.display = "none";
     retryCount = 0; // Reset retry count on success
   } catch (error) {
@@ -251,12 +270,68 @@ async function fetchProducts() {
 function renderProducts(products) {
   productGrid.innerHTML = "";
 
+  if (!products.length) {
+    const emptyMessage = document.createElement("p");
+    emptyMessage.className = "empty-search-message";
+    emptyMessage.textContent = "No products match your search.";
+    productGrid.appendChild(emptyMessage);
+    console.log("Rendered empty search state");
+    return;
+  }
+
   products.forEach((product, index) => {
     const card = createProductCard(product, index);
     productGrid.appendChild(card);
   });
 
   console.log(`Rendered ${products.length} product cards`);
+}
+
+function getSearchableText(product) {
+  return [product.title, product.category, product.description]
+    .filter(Boolean)
+    .join(" ")
+    .toLowerCase();
+}
+
+function filterProductsBySearch() {
+  if (!productSearchInput) {
+    return;
+  }
+
+  const searchTerm = productSearchInput.value.trim().toLowerCase();
+  const filteredProducts = searchTerm
+    ? productsData.filter((product) =>
+        getSearchableText(product).includes(searchTerm),
+      )
+    : productsData;
+
+  renderProducts(filteredProducts);
+
+  if (searchStatus) {
+    searchStatus.textContent = searchTerm
+      ? `${filteredProducts.length} product${filteredProducts.length === 1 ? "" : "s"} found for "${productSearchInput.value.trim()}".`
+      : "";
+  }
+}
+
+function initializeProductSearch() {
+  if (!productSearchInput || !productSearchBtn) {
+    return;
+  }
+
+  productSearchBtn.addEventListener("click", filterProductsBySearch);
+  productSearchInput.addEventListener("input", filterProductsBySearch);
+  productSearchInput.addEventListener("search", filterProductsBySearch);
+}
+
+function renderProductResults() {
+  if (productSearchInput?.value.trim()) {
+    filterProductsBySearch();
+    return;
+  }
+
+  renderProducts(productsData);
 }
 
 // ============================================
@@ -288,15 +363,25 @@ function createProductCard(product, index) {
   const safeDescription = escapeHtml(product.description);
   const safeCategory = escapeHtml(product.category);
 
+  const imageLoading = index < 4 ? "eager" : "lazy";
+  const imageFetchPriority = index < 4 ? "high" : "auto";
+  const imageSrc = getOptimizedImageUrl(product.image, 360);
+  const imageSrcset = getOptimizedImageSrcset(product.image, [220, 360, 560]);
+
   card.innerHTML = `
     <a class="product-card-link" href="product.html?id=${product.id}" aria-label="View details for ${safeTitle}">
       <div class="product-image-container">
         <img
-          src="${product.image}"
+          src="${imageSrc}"
+          srcset="${imageSrcset}"
           alt="${safeTitle}"
           class="product-image"
-          loading="lazy"
+          loading="${imageLoading}"
           decoding="async"
+          fetchpriority="${imageFetchPriority}"
+          width="280"
+          height="280"
+          sizes="(max-width: 520px) 100vw, (max-width: 768px) 50vw, (max-width: 1200px) 33vw, 280px"
         />
         ${discount > 0 ? `<div class="product-badge">-${discount}%</div>` : ""}
       </div>
@@ -496,6 +581,7 @@ document.addEventListener("DOMContentLoaded", () => {
   // Initialize UI
   updateCartBadge();
   initializeAddToCartButtons();
+  initializeProductSearch();
 
   // Fetch products
   fetchProducts();

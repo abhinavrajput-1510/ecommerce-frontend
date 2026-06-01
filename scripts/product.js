@@ -17,6 +17,22 @@ let selectedOptions = {
 };
 let selectedQuantity = 1;
 
+function getOptimizedImageUrl(imageUrl, width) {
+  try {
+    const url = new URL(imageUrl);
+    const source = `${url.host}${url.pathname}${url.search}`;
+    return `https://wsrv.nl/?url=${encodeURIComponent(source)}&w=${width}&fit=contain&output=webp&q=82`;
+  } catch (error) {
+    return imageUrl;
+  }
+}
+
+function getOptimizedImageSrcset(imageUrl, widths) {
+  return widths
+    .map((width) => `${getOptimizedImageUrl(imageUrl, width)} ${width}w`)
+    .join(", ");
+}
+
 const VARIATIONS = {
   size: [
     { label: "Small", value: "S", modifier: 0 },
@@ -224,6 +240,10 @@ function renderProductDetail(product) {
   const ratingValue = Math.round(product.rating?.rate || 4.5);
   const stars = "★".repeat(ratingValue) + "☆".repeat(5 - ratingValue);
   const galleryImages = buildGallery(product);
+  const mainImageSrc = getOptimizedImageUrl(galleryImages[0], 720);
+  const mainImageSrcset = getOptimizedImageSrcset(galleryImages[0], [
+    360, 540, 720, 960,
+  ]);
 
   detailContent.innerHTML = `
     <div class="product-detail-wrapper">
@@ -231,11 +251,17 @@ function renderProductDetail(product) {
         <div class="main-image-frame">
           <img
             id="detail-main-image"
-            src="${galleryImages[0]}"
+            src="${mainImageSrc}"
+            srcset="${mainImageSrcset}"
+            data-original-src="${galleryImages[0]}"
             alt="${safeTitle}"
             class="zoom-image"
-            loading="lazy"
+            loading="eager"
             decoding="async"
+            fetchpriority="high"
+            width="640"
+            height="640"
+            sizes="(max-width: 900px) 100vw, 58vw"
           />
           <div id="detail-zoom-preview" class="zoom-preview"></div>
         </div>
@@ -247,7 +273,16 @@ function renderProductDetail(product) {
             .map(
               (image, index) => `
             <button class="thumbnail-button" data-image="${image}" aria-label="View image ${index + 1}">
-              <img src="${image}" alt="${safeTitle} view ${index + 1}" loading="lazy" decoding="async" />
+              <img
+                src="${getOptimizedImageUrl(image, 128)}"
+                srcset="${getOptimizedImageSrcset(image, [96, 128, 192])}"
+                alt="${safeTitle} view ${index + 1}"
+                loading="lazy"
+                decoding="async"
+                width="96"
+                height="80"
+                sizes="96px"
+              />
             </button>
           `,
             )
@@ -432,9 +467,13 @@ function renderProductDetail(product) {
     button.addEventListener("click", () => {
       const selectedImage = button.dataset.image;
       if (mainImage && selectedImage) {
-        mainImage.src = selectedImage;
+        mainImage.src = getOptimizedImageUrl(selectedImage, 720);
+        mainImage.srcset = getOptimizedImageSrcset(selectedImage, [
+          360, 540, 720, 960,
+        ]);
+        mainImage.dataset.originalSrc = selectedImage;
         if (zoomPreview) {
-          zoomPreview.style.backgroundImage = `url(${selectedImage})`;
+          zoomPreview.style.backgroundImage = `url(${mainImage.src})`;
         }
       }
     });

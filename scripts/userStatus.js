@@ -32,3 +32,5 @@ window.addEventListener("storage", (event) => {
     renderUserStatus();
   }
 });
+
+window.addEventListener("currentUserChanged", renderUserStatus);

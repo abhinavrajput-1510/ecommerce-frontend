@@ -4,6 +4,22 @@ const cartSummary = document.getElementById("cart-summary");
 const cartTotalAmount = document.getElementById("cart-total");
 const checkoutBtn = document.getElementById("checkout-btn");
 
+function getOptimizedImageUrl(imageUrl, width) {
+  try {
+    const url = new URL(imageUrl);
+    const source = `${url.host}${url.pathname}${url.search}`;
+    return `https://wsrv.nl/?url=${encodeURIComponent(source)}&w=${width}&fit=contain&output=webp&q=82`;
+  } catch (error) {
+    return imageUrl;
+  }
+}
+
+function getOptimizedImageSrcset(imageUrl, widths) {
+  return widths
+    .map((width) => `${getOptimizedImageUrl(imageUrl, width)} ${width}w`)
+    .join(", ");
+}
+
 function getCart() {
   return JSON.parse(localStorage.getItem("cart")) || [];
 }
@@ -63,12 +79,23 @@ function renderCart() {
 
   cart.forEach((item, index) => {
     const itemOptions = getOptionsLabel(item.options);
+    const imageSrc = getOptimizedImageUrl(item.image, 160);
+    const imageSrcset = getOptimizedImageSrcset(item.image, [110, 160, 220]);
     const cartItem = document.createElement("article");
     cartItem.className = "cart-item";
     cartItem.dataset.index = index;
     cartItem.innerHTML = `
       <div class="cart-item-image">
-        <img src="${item.image}" alt="${item.title}" loading="lazy" decoding="async" />
+        <img
+          src="${imageSrc}"
+          srcset="${imageSrcset}"
+          alt="${item.title}"
+          loading="lazy"
+          decoding="async"
+          width="110"
+          height="110"
+          sizes="110px"
+        />
       </div>
       <div class="cart-item-details">
         <h3>${item.title}</h3>

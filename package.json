@@ -2,16 +2,21 @@
   "name": "ecommerce--frontend",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "generate-config": "node scripts/generate-firebase-config.js",
+    "minify": "node scripts/minify-assets.js",
+    "build": "npm run generate-config && npm run minify"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/abhinavrajput-1510/ecommerce-frontend.git"
   },
-  "keywords": [],
-  "author": "",
+  "devDependencies": {
+    "cssnano": "^7.0.8",
+    "html-minifier-terser": "^7.2.0",
+    "postcss": "^8.5.6",
+    "terser": "^5.43.1"
+  },
   "license": "ISC",
   "type": "commonjs",
   "bugs": {
