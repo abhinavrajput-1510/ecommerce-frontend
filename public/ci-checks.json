@@ -1,0 +1,15 @@
+{
+  "brokenLinks": [],
+  "missingAlts": [],
+  "missingLang": false,
+  "minifiedAssets": [
+    { "asset": "styles/main.min.css", "exists": true },
+    { "asset": "scripts/app.min.js", "exists": true },
+    { "asset": "scripts/product.min.js", "exists": true },
+    { "asset": "scripts/cart.min.js", "exists": true },
+    { "asset": "scripts/auth.min.js", "exists": true },
+    { "asset": "scripts/checkout.min.js", "exists": true },
+    { "asset": "scripts/userStatus.min.js", "exists": true }
+  ],
+  "notes": "Static checks passed (link validation, lang attribute present, minified assets available). Runtime, accessibility audit, and cross-browser tests require a browser or CI tooling; see recommendations."
+}

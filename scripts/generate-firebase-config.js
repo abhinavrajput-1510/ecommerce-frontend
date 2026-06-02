@@ -32,7 +32,13 @@ if (!fs.existsSync(envPath)) {
   process.exit(0);
 }
 
-const env = parseEnv(fs.readFileSync(envPath, "utf8"));
+const envFile = fs.existsSync(envPath)
+  ? parseEnv(fs.readFileSync(envPath, "utf8"))
+  : {};
+const env = {
+  ...envFile,
+  ...process.env,
+};
 const requiredKeys = [
   "FIREBASE_API_KEY",
   "FIREBASE_AUTH_DOMAIN",
