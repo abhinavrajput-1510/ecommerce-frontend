@@ -4,3 +4,9 @@ dist/
 scripts/firebase-config.js
 .vscode/
 .DS_Store
+# Ignore generated build outputs
+public/
+*.min.js
+*.min.css
+public/scripts/
+public/styles/
